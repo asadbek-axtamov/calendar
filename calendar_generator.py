@@ -31,18 +31,30 @@ class CalendarGenerator:
         return months[self.month]
     
     def get_start_day_of_month(self):
-        if self.month<3:
-            self.month += 12
-            self.year -= 1
-        q = 1
         m = self.month
-        K = self.year%100
-        J = (self.year)//100
+        y = self.year
+        if m<3:
+            m += 12
+            y -= 1
+        q = 1
+        K = y%100
+        J = (y)//100
         h = ((q + 13*(m+1)//5+K + K//4 + J//4 - 2*J)%7)
         return (h+6)%7
     
     def build_grid_string(self):
-        return
+        output = "Su Mo Tu We Th Fr Sa\n"
+        first_day = self.get_start_day_of_month()
+        total_days = self.get_days_in_month()
+
+        for i in range(1,total_days+1):
+            day_of_week = (first_day+i-1)%7
+            if i == 1:
+                output += '   '*first_day
+            if day_of_week==0 and i != 1:
+                output += '\n'
+            output += f"{i:2d} "
+        return output
 
     def generate_calendar(self):
         return 
@@ -54,5 +66,8 @@ check_leap_year = CalendarGenerator(2024,1)
 days = CalendarGenerator(2024,5)
 #print(days.get_days_in_month())
 
-start_day = CalendarGenerator(2026,4)
-print(start_day.get_start_day_of_month())
+start_day = CalendarGenerator(2026,2)
+#print(start_day.get_start_day_of_month())
+
+grid = CalendarGenerator(2026,2)
+print(grid.build_grid_string())
