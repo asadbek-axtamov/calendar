@@ -1,3 +1,4 @@
+import datetime
 class CalendarGenerator:
     def __init__(self, year, month):
         self.year = year
@@ -57,7 +58,15 @@ class CalendarGenerator:
         return output
 
     def generate_calendar(self):
-        return 
+        date = datetime.datetime(self.year, self.month, 1)
+        month = date.strftime('%B')
+        year = date.strftime('%Y')
+        m_y = f"{month} {year}"
+        s = 10-len(m_y)//2
+        calendar = f"{' '*s}{month} {year}\n"
+        res = self.build_grid_string()
+        calendar += res
+        return calendar
 
 
 check_leap_year = CalendarGenerator(2024,1)
@@ -70,4 +79,7 @@ start_day = CalendarGenerator(2026,2)
 #print(start_day.get_start_day_of_month())
 
 grid = CalendarGenerator(2026,2)
-print(grid.build_grid_string())
+#print(grid.build_grid_string())
+
+calendar = CalendarGenerator(2026,9)
+print(calendar.generate_calendar())
